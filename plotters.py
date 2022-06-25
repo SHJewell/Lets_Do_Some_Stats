@@ -2,6 +2,8 @@
 Plotters
 
 shorthand plotting funcs
+
+We'll see if this is actually useful
 '''
 
 from matplotlib import pyplot as plt

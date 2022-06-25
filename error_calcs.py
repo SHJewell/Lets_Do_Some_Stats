@@ -17,6 +17,6 @@ def residuals(y_est, y_truth):
 
 def rmse(y_est, y_truth):
 
-    return np.sqrt((residuals(y_est, y_truth)) ** 2 / len(y_truth))
+    return np.sum(np.sqrt((residuals(y_est, y_truth)) ** 2) / len(y_truth))
 
 
