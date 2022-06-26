@@ -26,13 +26,21 @@ def my_linear_reg(x, y):
 
     return beta, alpha
 
-def skl_linear_reg(x, y):
+def skl_linear_reg(x, y, **kwargs):
+
+    do_pred = kwargs.get('pred', False)
 
     x = x.reshape(-1, 1)
 
     # getting weird NoneType error here. Unsure why
-    reg = linear_model.LinearRegression()
-    reg.fit(x, y)
+    regr = linear_model.LinearRegression()
+    regr.fit(x, y)
 
-    return reg.coef_, reg.intercept_
+    if do_pred:
+
+        y_pred = regr.predict(x)
+
+        return regr.coef_, regr.intercept_, y_pred
+
+    return regr.coef_, regr.intercept_
 
