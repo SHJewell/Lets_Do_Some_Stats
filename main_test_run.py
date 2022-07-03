@@ -17,4 +17,4 @@ house_data_path = f'E:\Documents\Datasets\Kaggle\House Prices\\train.csv'
 
 if __name__ == '__main__':
 
-    regtest.least_squares_reg_test(house_data_path)
+    regtest.my_least_squares_reg(house_data_path)
