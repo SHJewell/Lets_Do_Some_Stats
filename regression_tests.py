@@ -5,10 +5,52 @@ from matplotlib import pyplot as plt
 import regression
 import error_calcs
 
+def least_squares_reg_test(train_path):
 
-def linear_reg_test(data_path):
+    data = pd.read_csv(train_path)
 
-    data = pd.read_csv(data_path)
+    yearbuilt = data['YearBuilt'].to_numpy()
+    price = data['SalePrice'].to_numpy()
+
+    #plts.scatter_2d(price, yearbuilt, y_label='Year Built', x_label='Price')
+
+    my_alpha, my_intercept = regression.my_least_squares_reg(yearbuilt, price)
+    sk_alpha, sk_intercept, sk_model_price = regression.skl_linear_reg(yearbuilt, price, pred=True)
+
+    # test_data = pd.read_csv(test_path)
+    # yearbuilt = test_data['YearBuilt'].to_numpy()
+    # price = test_data['SalePrice'].to_numpy()
+
+    my_model_price = yearbuilt * my_alpha + my_intercept
+
+    my_residual = np.absolute(price - my_model_price)
+    sk_residual = np.absolute(price - sk_model_price)
+
+    model_resid = np.absolute(my_model_price - sk_model_price)
+
+    print(f'My RMSE: {error_calcs.rmse(my_model_price, price)}, SKL RMSE: {error_calcs.rmse(sk_model_price, price)}')
+
+    fig, (ax1, ax2, ax3) = plt.subplots(3, 1)
+    ax1.scatter(yearbuilt, price, marker='.', color='blue', label='Price')
+    ax1.scatter(yearbuilt, my_model_price, marker='+', color='green', label='My Price')
+    ax1.scatter(yearbuilt, sk_model_price, marker='*', color='red', label='SKL Price')
+    ax1.xtitle='Price'
+    ax1.legend()
+    ax2.scatter(yearbuilt, my_residual, marker='+', color='green', label='My Resid')
+    ax2.scatter(yearbuilt, sk_residual, marker='*', color='red', label='SKL1 Resid')
+    ax2.legend()
+    ax3.scatter(yearbuilt, model_resid, marker='.', label='Model Resid 1')
+    ax3.legend()
+
+    plt.show()
+
+    return error_calcs.rmse(my_model_price, price), error_calcs.rmse(sk_model_price, price)
+
+
+
+def linear_reg_test(train_path, test_path):
+
+    data = pd.read_csv(train_path)
 
     yearbuilt = data['YearBuilt'].to_numpy()
     price = data['SalePrice'].to_numpy()
