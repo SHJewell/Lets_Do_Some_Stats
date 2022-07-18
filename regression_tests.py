@@ -5,6 +5,20 @@ from matplotlib import pyplot as plt
 import regression
 import error_calcs
 
+def my_lasso_reg(data_path):
+    '''
+
+    :param data_path:
+    :return:
+    '''
+
+    data = pd.read_csv(data_path)
+
+    yearbuilt = data['YearBuilt'].to_numpy()
+    price = data['SalePrice'].to_numpy()
+
+    return
+
 def my_least_squares_reg(data_path):
 
     data = pd.read_csv(data_path)

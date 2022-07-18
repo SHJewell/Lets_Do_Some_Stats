@@ -3,13 +3,36 @@ Starting review of stats and learning datascience techniques, let's start at the
 
 Methods:
     Linear Regression
-    Nearest Neighbor
     Lasso Regression
     Multivariate Regression
+
+Maybe Impliment:
+    Nearest Neighbor
 '''
 
 import numpy as np
 from sklearn import linear_model
+
+def my_lasso_reg(x, y):
+    '''
+    Lasso uses regression with weights or penalties added
+
+    :param x:
+    :param y:
+    :return:
+    '''
+
+    return
+
+def sk_lasso(a, x, y):
+
+    model = linear_model.Lasso(alpha=1)
+
+
+
+
+
+#def my_nearest_neighbor_reg(x, y):
 
 def my_least_squares_reg(x, y):
     '''
