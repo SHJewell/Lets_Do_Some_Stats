@@ -3,8 +3,8 @@ Starting review of stats and learning datascience techniques, let's start at the
 
 Methods:
     Linear Regression
-    Lasso Regression
     Multivariate Regression
+    Lasso Regression
 
 Maybe Impliment:
     Nearest Neighbor
@@ -12,6 +12,7 @@ Maybe Impliment:
 
 import numpy as np
 from sklearn import linear_model
+import statsmodels.api as sm
 
 def my_lasso_reg(x, y):
     '''
@@ -97,4 +98,49 @@ def skl_linear_reg(x, y, **kwargs):
         return regr.coef_, regr.intercept_, y_pred
 
     return regr.coef_, regr.intercept_
+
+def my_multi_reg():
+    pass
+
+def sm_multi_reg(x, y, **kwargs):
+    '''
+    Not working correctly (?)
+    Multiple linear regression,
+
+    :param x: multiple column variables
+    :param y: vector, to be modelled
+    :param kwargs: pred can exist, boolean. Determine if this will generate the model or just the parameters
+    :return:
+    '''
+
+    do_pred = kwargs.get('pred', False)
+
+    model = sm.OLS(y, x).fit()
+
+    if do_pred:
+
+        y_pred = model.predict(x)
+
+        return model, y_pred
+
+    return model
+
+def sk_multi_reg(x, y, **kwargs):
+    '''
+    Given the nature of the SKLearn syntax, this is kind of redundant
+
+    '''
+
+    do_pred = kwargs.get('pred', False)
+
+    lm = linear_model.LinearRegression()
+    regr = lm.fit(x, y)
+
+    if do_pred:
+
+        predict = lm.predict(x)
+
+        return regr.coef_, regr.intercept_, predict
+
+    return regr
 

@@ -6,6 +6,8 @@ Index:
 '''
 
 import sklearn.metrics as metrics
+import numpy as np
+
 import regression as reg
 
 def gen_vif(dset, primary):
@@ -18,14 +20,29 @@ def gen_vif(dset, primary):
     :return:
     '''
 
-    cols = list(dset.columns).remove(primary)
+    cols = list(dset.columns)
     vif_results = dict()
+
+    dset_np = dset[primary].to_numpy()
 
     for col in cols:
 
-        beta, alpha, y_pred = reg.skl_linear_reg(dset[primary], dset[col], do_pred=True)
+        if col == primary:
+            continue
 
-        r2 = metrics.r2_score(dset[primary], y_pred)
+        temp = dict()
+        y = dset[col].to_numpy()
 
-        vif_results[col] = 1 / (1 - r2)
+        beta, alpha, y_pred = reg.skl_linear_reg(dset_np, y, pred=True)
+
+        temp['R2'] = metrics.r2_score(dset[primary], y_pred)
+
+        if temp['R2'] == 1:
+            temp['VIF'] = np.NINF
+        else:
+            temp['VIF'] = 1 / (1 - temp['R2'])
+
+        vif_results[col] = temp
+
+    return vif_results
 

@@ -95,3 +95,60 @@ def linear_reg_test(data_path):
     ax3.legend()
 
     plt.show()
+
+def mulit_regression_stocks_comparison():
+    '''
+    Comparing SKLearn and SM multi-regression algorithms
+    :return:
+    '''
+
+    toy_stocks_set = f'E:\Documents\Datasets\Toy Sets\Stockmarket\stockmarket.csv'
+
+    stocks = pd.read_csv(toy_stocks_set)
+
+    stocks_x = stocks[['Interest_Rate', 'Unemployment_Rate']]
+    stocks_y = stocks['Stock_Index_Price']
+
+    a, b, sk_model = regression.sk_multi_reg(stocks_x, stocks_y, pred=True)
+    a, sm_model = regression.sm_multi_reg(stocks_x, stocks_y, pred=True)
+
+    plt.plot(stocks_y, label='Stock Price')
+    plt.plot(sk_model, label='SKL Model')
+    plt.plot(sm_model, label='SM Model')
+    plt.legend()
+    plt.show()
+
+def multi_regression_compound_test():
+    '''
+    Looking at the effect of additional predictors on multiregression and the difference between single regression and
+    multi-regression
+
+    :return:
+    '''
+    small_bp_set = f'E:\\Documents\\Datasets\\Toy Sets\\Bloodpress\\bloodpress.csv'
+
+    bp = pd.read_csv(small_bp_set)
+
+    xs = ['Pt', 'Age', 'Weight', 'BSA', 'Dur', 'Pulse', 'Stress']
+
+    bpy = bp['BP']
+
+    fig, ax = plt.subplots()
+
+    for n, x in enumerate(xs):
+
+        n += 1
+        bpx = bp[x].to_numpy()
+        bpxs = bp[xs[:n]].to_numpy()
+
+        a, b, xmodel = regression.sk_multi_reg(bpxs, bpy, pred=True)
+
+        ax.plot(xmodel, '*', label=f'Multi to {x}')
+
+        a, b, xmodel = regression.skl_linear_reg(bpx, bpy, pred=True)
+
+        ax.plot(xmodel, label=x)
+
+    ax.plot(bpy, label='Truth')
+    plt.legend()
+    plt.show()
