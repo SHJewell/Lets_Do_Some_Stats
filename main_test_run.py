@@ -29,6 +29,13 @@ if __name__ == '__main__':
 
     bpy = bp['BP']
 
+    cor_mat = np.array()
+
+    for n, col in enumerate(bp.columns):
+
+        for m in range(n,len(col)):
+
+
 
     bp_dy, bp_dX = dmatrices('BP ~ Age+Weight+BSA+Dur+Pulse+Stress', data=bp, return_type='dataframe')
 

@@ -10,6 +10,15 @@ import numpy as np
 
 import regression as reg
 
+def correlation_matrix(data, cols):
+    '''
+
+    :param data: data array, numpy array or pandas DataFrame
+    :param cols: list of column names
+    :return:
+    '''
+
+
 def gen_vif(dset, primary):
     '''
     Calculates VIF values for all columns
