@@ -9,6 +9,7 @@ import scipy
 from matplotlib import pyplot as plt
 from patsy import dmatrices
 from statsmodels.stats.outliers_influence import variance_inflation_factor
+import sklearn
 from sklearn import linear_model
 import statsmodels.api as sm
 
@@ -19,10 +20,10 @@ import plotters
 import other_analysis as other
 import regression_tests as regtest
 
-# house_data_path = f'E:\\Documents\\Datasets\\Kaggle\\House Prices\\train.csv'
-# small_bp_set = f'E:\\Documents\\Datasets\\Toy Sets\\Bloodpress\\bloodpress.csv'
-# toy_stocks_set =f'E:\\Documents\\Datasets\\Toy Sets\\Stockmarket\\stockmarket.csv'
-small_bp_set = f'Data/blood_pressure.csv'
+house_data_path = f'E:\\Documents\\Datasets\\Kaggle\\House Prices\\train.csv'
+small_bp_set = f'E:\\Documents\\Datasets\\Toy Sets\\Bloodpress\\bloodpress.csv'
+toy_stocks_set =f'E:\\Documents\\Datasets\\Toy Sets\\Stockmarket\\stockmarket.csv'
+# small_bp_set = f'Data/blood_pressure.csv'
 
 if __name__ == '__main__':
 
@@ -30,13 +31,15 @@ if __name__ == '__main__':
 
     xs = ['Pt', 'Age', 'Weight', 'BSA', 'Dur', 'Pulse', 'Stress']
     bpy = bp['BP']
-    cor_mat = np.array()
+    cor_mat = np.empty([len(xs), len(xs)])
+    cor_mat2 = np.empty([len(xs), len(xs)])
 
     for n, col in enumerate(bp.columns):
 
-        for m in range(n, len(col)):
+        for m in range(n, len(bp.columns)):
 
-            cor_mat[n, m] = error_calcs.rsquared(bpy, col)
+            cor_mat[n, m] = error_calcs.rsquared(bpy, bp[col])
+            cor_mat2[n, m] = sklearn.metrics.r2_score(bpy, bp[col])
 
     bp_dy, bp_dX = dmatrices('BP ~ Age+Weight+BSA+Dur+Pulse+Stress', data=bp, return_type='dataframe')
 

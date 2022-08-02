@@ -55,3 +55,18 @@ def gen_vif(dset, primary):
 
     return vif_results
 
+def tss(y):
+    '''
+    Total sum of squares
+    '''
+
+    return np.sum((y - np.mean(y))**2)
+
+
+def rss(y, fy):
+    '''
+    Residual Sum of Squares
+    :return:
+    '''
+
+    return np.sum((y - fy) ** 2)
